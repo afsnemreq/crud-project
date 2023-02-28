@@ -1,0 +1,65 @@
+<div class="container mt-4">
+    <!-- Button trigger modal -->
+    <button class="btn btn-success mb-3" (click)="open(content)">Hayvan Ekle</button>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Order</th>
+                <th scope="col">Name</th>
+                <th scope="col">Create Date</th>
+                <th scope="col">Properties</th>
+                <th scope="col">-</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let animal of animals">
+                <th scope="row">{{ animal.order }}</th>
+                <td>
+                    <!-- <img
+                        [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
+                        class="me-2"
+                        style="width: 20px"
+                    /> -->
+                    {{ animal.name }}
+                </td>
+                <td>{{ animal.create_date }}</td>
+                <td>
+                    <p *ngFor="let property of animal.property">{{ property }}</p>
+                </td>
+                <td>
+                    <button class="btn btn-primary mb-3" (click)="fillModalAnimal(animal.id, content)">Güncelle</button>
+                    <button class="btn btn-danger mb-3 mx-2" (click)="deleteAnimal(animal.id)">Sil</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div> 
+
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Hayvan Ekle</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<div class="form-group mb-2">
+            <label>Hayvan Sırası</label>
+            <input type="text" class="w-100 form-control" [(ngModel)]="order">
+        </div>
+        <div class="form-group mb-2">
+            <label>Hayvan İsmi</label>
+            <input type="text" class="w-100 form-control" [(ngModel)]="name">
+        </div>
+
+        <button class="btn btn-success mb-3" (click)="addInput()">+</button>
+        <div class="form-group mb-2" *ngFor="let input of inputArray; let i = index">
+            <label>Özellik {{i + 1}}</label>
+            <input type="text" class="w-100 form-control" [(ngModel)]="inputArray[i]">
+        </div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="processForm(buttonProcess)">{{ buttonText }}</button>
+	</div>
+</ng-template>
